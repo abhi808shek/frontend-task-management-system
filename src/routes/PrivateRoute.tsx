@@ -1,11 +1,13 @@
-import React from 'react'
+import { Navigate, Outlet, useLocation } from "react-router";
 
-const Private = () => {
-  return (
-    <div>
-      <h1>Private Route</h1>
-    </div>
-  )
-}
+const PrivateRoutes = () => {
+  const location = useLocation();
 
-export default Private
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+  return <Outlet />;
+};
+
+export default PrivateRoutes;
